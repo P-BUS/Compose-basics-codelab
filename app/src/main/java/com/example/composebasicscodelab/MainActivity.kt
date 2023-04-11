@@ -45,13 +45,17 @@ private fun MyApp(
 @Composable
 fun Greeting(name: String) {
     var isExpanded by remember { mutableStateOf(false) }
+    val extraPadding = if (isExpanded) 48.dp else 0.dp
+
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(bottom = extraPadding)
             ) {
                 Text(text = "Hello, ")
                 Text(text = name)
