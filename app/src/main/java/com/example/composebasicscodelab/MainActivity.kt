@@ -50,8 +50,11 @@ fun Greeting(name: String) {
                 Text(text = "Hello, ")
                 Text(text = name)
             }
-            ElevatedButton(onClick = { /*TODO*/ }) {
-                Text(text = "Show more")
+            var isClicked: Boolean = false
+            var text: String = ""
+            ElevatedButton( onClick = { isClicked = !isClicked }) {
+                if (isClicked) text = "Show less" else text = "Show more"
+                    Text(text = text)
             }
         }
     }
