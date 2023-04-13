@@ -1,5 +1,6 @@
 package com.example.composebasicscodelab
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,10 +15,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composebasicscodelab.ui.theme.ComposeBasicsCodelabTheme
-import java.nio.channels.spi.SelectorProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ fun MyApp(modifier: Modifier = Modifier) {
 
     Surface(modifier) {
         if (shouldShowOnboarding) {
-            OnboardingScreen( onContinueClicked = { shouldShowOnboarding = false } )
+            OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
         } else {
             Greetings()
         }
@@ -47,7 +48,7 @@ fun MyApp(modifier: Modifier = Modifier) {
 fun Greetings(
     modifier: Modifier = Modifier,
     names: List<String> = List(size = 1000) { autoCreatedItem ->
-        "username #$autoCreatedItem"
+        "$autoCreatedItem"
     }
 ) {
     LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
@@ -78,7 +79,9 @@ fun Greeting(name: String) {
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello, ")
-                Text(text = name)
+                Text(text = name, style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.ExtraBold
+                ))
             }
             ElevatedButton(onClick = { isExpanded = !isExpanded }) {
                 Text(text = if (isExpanded) "Show less" else "Show more")
@@ -107,6 +110,15 @@ fun OnboardingScreen(
     }
 }
 
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun OnboardingPreview() {
+    ComposeBasicsCodelabTheme {
+        OnboardingScreen(onContinueClicked = {}) // Do nothing on click.
+    }
+}
+
 @Preview(showBackground = true, widthDp = 320)
 @Composable
 private fun GreetingsPreview() {
@@ -115,11 +127,17 @@ private fun GreetingsPreview() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "Dark"
+)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
-fun OnboardingPreview() {
+fun DefaultPreview() {
     ComposeBasicsCodelabTheme {
-        OnboardingScreen( onContinueClicked = {}) // Do nothing on click.
+        Greetings()
     }
 }
 
